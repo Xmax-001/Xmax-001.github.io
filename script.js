@@ -63,10 +63,17 @@ function applyFilter() {
         case 'neon':
             filterValue = 'contrast(150%) brightness(120%) saturate(200%) hue-rotate(270deg)';
             break;
+        case 'softkorean':
+            filterValue = 'brightness(1.15) contrast(0.85) saturate(1.2) blur(1.5px)';
+            break;
         default:
             filterValue = 'none';
     }
+
     video.style.filter = filterValue;
+
+    // ✅ เรียก overlay ทุกครั้งเมื่อเปลี่ยนฟิลเตอร์
+    applyOverlay();
 }
 
 // Utility functions
@@ -77,6 +84,25 @@ function showStatus(message, type = 'success') {
     setTimeout(() => {
         statusMessage.style.display = 'none';
     }, 3000);
+}
+function applyOverlay() {
+    const existing = document.getElementById('soft-overlay');
+    if (existing) existing.remove();
+
+    if (currentFilter === 'softkorean') {
+        const overlay = document.createElement('div');
+        overlay.id = 'soft-overlay';
+        overlay.style.cssText = `
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.15), transparent 70%);
+            pointer-events: none;
+            z-index: 10;
+        `;
+        document.querySelector('.camera-container')?.appendChild(overlay);
+    }
 }
 
 // Camera functions
