@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Booth</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="photo-booth">
+        <div class="header">
+            <h1>📸 Photo Booth</h1>
+            <p style="font-size: 18px; color: #d63384; margin-bottom: 15px;">ถ่ายรูปสวยๆ และแชร์ความสุขกัน! 💕</p>
+            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 10px;">
+                <button class="btn" id="timerBtn" style="background: linear-gradient(45deg, #ffc0cb, #ffb6c1); color: #d63384; border: 2px solid #ff69b4; padding: 8px 16px; border-radius: 20px; font-size: 14px; cursor: pointer; font-weight: 600;">
+                    ⏰ Timer: OFF
+                </button>
+                <button class="btn" id="effectBtn" style="background: linear-gradient(45deg, #da70d6, #ff69b4); color: white; border: 2px solid rgba(255,255,255,0.4); padding: 8px 16px; border-radius: 20px; font-size: 14px; cursor: pointer; font-weight: 600; text-shadow: 0 1px 3px rgba(0,0,0,0.3);">
+                    ✨ เอฟเฟกต์
+                </button>
+            </div>
+        </div>
+        
+        <div class="filters">
+            <button class="filter-btn active" data-filter="none">🎯 ปกติ</button>
+            <button class="filter-btn" data-filter="sepia">🏛️ Sepia</button>
+            <button class="filter-btn" data-filter="grayscale">⚫ ขาวดำ</button>
+            <button class="filter-btn" data-filter="blur">💫 Blur</button>
+            <button class="filter-btn" data-filter="brightness">☀️ สว่าง</button>
+            <button class="filter-btn" data-filter="contrast">🔥 คมชัด</button>
+            <button class="filter-btn" data-filter="saturate">🌈 สีสด</button>
+            <button class="filter-btn" data-filter="hue">🎊 Rainbow</button>
+            <button class="filter-btn" data-filter="vintage">📷 Vintage</button>
+            <button class="filter-btn" data-filter="neon">💎 Neon</button>
+        </div>
+        
+        <div class="camera-container" id="cameraContainer">
+            <video id="video" autoplay playsinline muted></video>
+            <canvas id="canvas"></canvas>
+        </div>
+        
+        <div class="controls">
+            <button class="btn btn-primary" id="startBtn">เริ่มกล้อง</button>
+            <button class="btn btn-primary" id="captureBtn" disabled>📸 ถ่ายรูป</button>
+            <button class="btn btn-secondary" id="retakeBtn" style="display:none;">ถ่ายใหม่</button>
+            <button class="btn btn-success" id="downloadBtn" style="display:none;">💾 บันทึก</button>
+        </div>
+        
+        <div class="status-message" id="statusMessage"></div>
+        
+        <div class="photo-gallery">
+            <h3>รูปที่ถ่ายแล้ว</h3>
+            <div class="gallery-grid" id="photoGallery"></div>
+        </div>
+        
+        <div class="qr-section" id="qrSection">
+            <h4>แชร์รูปของคุณ</h4>
+            <div class="qr-code">
+                <span>QR Code</span>
+            </div>
+            <p>สแกน QR Code เพื่อดูรูปในมือถือ</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
