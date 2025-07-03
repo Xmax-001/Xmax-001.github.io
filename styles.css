@@ -112,6 +112,97 @@ body {
     z-index: 1;
 }
 
+.stickers-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.sticker-element {
+    pointer-events: auto;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+}
+
+.sticker-element:hover {
+    transform: scale(1.1) !important;
+}
+
+.sticker-panel {
+    background: rgba(255, 240, 245, 0.95);
+    border: 2px solid rgba(255, 192, 203, 0.6);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+}
+
+.sticker-panel h4 {
+    color: #d63384;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.sticker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.sticker-item {
+    background: white;
+    border: 2px solid #ffc0cb;
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(255, 192, 203, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.sticker-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 192, 203, 0.4), transparent);
+    transition: left 0.3s;
+}
+
+.sticker-item:hover::before {
+    left: 100%;
+}
+
+.sticker-item:hover {
+    transform: scale(1.1);
+    border-color: #ff69b4;
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+}
+
+.sticker-item:active {
+    transform: scale(0.95);
+}
+
+.resize-handle {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.resize-handle:hover {
+    background: #da70d6 !important;
+    transform: scale(1.2);
+}
+
 .camera-container {
     position: relative;
 }
