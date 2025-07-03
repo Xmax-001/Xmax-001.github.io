@@ -8,12 +8,6 @@ let currentFilter = 'none';
 let timerEnabled = false;
 let timerSeconds = 3;
 let isCapturing = false;
-let stickers = [];
-let stickerIdCounter = 0;
-let selectedSticker = null;
-let isDragging = false;
-let dragOffset = { x: 0, y: 0 };
-let isResizing = false;
 
 // DOM elements
 const startBtn = document.getElementById('startBtn');
@@ -143,7 +137,6 @@ function capturePhoto() {
         takePicture();
     }
 }
-
 
 function startCountdown() {
     isCapturing = true;
