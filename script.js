@@ -1,391 +1,304 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Comic Sans MS', cursive, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(45deg, #ffeef8, #ffe0f0, #ffd1e8, #ffb3d9, #ff99cc, #ffccdd);
-    background-size: 400% 400%;
-    animation: gradientShift 8s ease infinite;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-.photo-booth {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(15px);
-    border-radius: 30px;
-    padding: 35px;
-    box-shadow: 0 25px 80px rgba(255, 153, 204, 0.3), 0 0 50px rgba(255, 255, 255, 0.8);
-    max-width: 600px;
-    width: 100%;
-    text-align: center;
-    border: 3px solid rgba(255, 182, 193, 0.4);
-    position: relative;
-    overflow: hidden;
-}
-
-.photo-booth::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 192, 203, 0.2), transparent);
-    animation: shimmer 3s linear infinite;
-    pointer-events: none;
-}
-
-@keyframes shimmer {
-    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-}
-
-.header {
-    margin-bottom: 20px;
-}
-
-.header h1 {
-    color: #d63384;
-    font-size: 3em;
-    margin-bottom: 10px;
-    background: linear-gradient(45deg, #ff69b4, #ffc0cb, #ffb6c1, #f8bbd9);
-    background-size: 300% 300%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: textGradient 4s ease infinite;
-    text-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
-    position: relative;
-}
-
-@keyframes textGradient {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-}
-
-.header h1::after {
-    content: '💖';
-    position: absolute;
-    top: -10px;
-    right: -20px;
-    animation: sparkle 2s ease-in-out infinite;
-}
-
-@keyframes sparkle {
-    0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.7; }
-    50% { transform: scale(1.3) rotate(180deg); opacity: 1; }
-}
-
-.camera-container {
-    position: relative;
-    margin-bottom: 20px;
-    border-radius: 25px;
-    overflow: hidden;
-    background: linear-gradient(45deg, #ffc0cb, #ffb6c1, #f8bbd9);
-    aspect-ratio: 4/3;
-    border: 4px solid rgba(255, 192, 203, 0.6);
-    box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.3);
-}
-
-.camera-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, transparent, rgba(255, 192, 203, 0.2), transparent);
-    pointer-events: none;
-    z-index: 1;
-}
-
-.camera-container {
-    position: relative;
-}
-
-#video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-#canvas {
-    display: none;
-}
-
-.captured-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 15px;
-}
-
-.controls {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
-
-.btn {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 25px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 120px;
-}
-
-.btn-primary {
-    background: linear-gradient(45deg, #ff69b4, #ffc0cb, #ffb6c1);
-    background-size: 200% 200%;
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    animation: buttonGradient 3s ease infinite;
-    position: relative;
-    overflow: hidden;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-}
-
-.btn-primary::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: left 0.5s;
-}
-
-.btn-primary:hover::before {
-    left: 100%;
-}
-
-@keyframes buttonGradient {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
-}
-
-.btn-secondary {
-    background: rgba(255, 240, 245, 0.9);
-    color: #d63384;
-    border: 2px solid #ffb6c1;
-    backdrop-filter: blur(10px);
-}
-
-.btn-secondary:hover {
-    background: rgba(255, 192, 203, 0.9);
-    transform: translateY(-1px);
-    border-color: #ff69b4;
-}
-
-.btn-success {
-    background: linear-gradient(45deg, #ff69b4, #da70d6);
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-}
-
-.btn-success:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(218, 112, 214, 0.4);
-}
-
-.btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none !important;
-}
-
-.photo-gallery {
-    margin-top: 20px;
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.gallery-item {
-    aspect-ratio: 1;
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    border: 3px solid transparent;
-}
-
-.gallery-item:hover {
-    transform: scale(1.05);
-    border-color: #ff69b4;
-    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.qr-section {
-    margin-top: 20px;
-    padding: 20px;
-    background: rgba(255, 240, 245, 0.9);
-    border-radius: 20px;
-    display: none;
-    border: 2px solid rgba(255, 192, 203, 0.4);
-    backdrop-filter: blur(10px);
-}
-
-.qr-code {
-    width: 150px;
-    height: 150px;
-    margin: 0 auto 15px;
-    background: white;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #ffc0cb;
-    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.2);
-}
-
-.status-message {
-    margin-top: 15px;
-    padding: 10px;
-    border-radius: 10px;
-    font-weight: 500;
-    display: none;
-}
-
-.status-success {
-    background: #f8d7da;
-    color: #d63384;
-    border: 1px solid #ffc0cb;
-}
-
-.status-error {
-    background: #f8d7da;
-    color: #d63384;
-    border: 1px solid #ff69b4;
-}
-
-.filters {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-}
-
-.filter-btn {
-    padding: 10px 18px;
-    border: 2px solid #ffb6c1;
-    border-radius: 25px;
-    background: rgba(255, 240, 245, 0.95);
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    position: relative;
-    overflow: hidden;
-    color: #d63384;
-}
-
-.filter-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 192, 203, 0.4), transparent);
-    transition: left 0.3s;
-}
-
-.filter-btn:hover::before {
-    left: 100%;
-}
-
-.filter-btn.active {
-    background: linear-gradient(45deg, #ff69b4, #ffc0cb);
-    color: white;
-    border-color: rgba(255, 255, 255, 0.6);
-    transform: scale(1.1);
-    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
-    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-}
-
-.filter-btn:hover {
-    border-color: #ff69b4;
-    transform: translateY(-2px);
-}
-
-/* Animation keyframes */
-@keyframes float {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-200px) scale(0.5); opacity: 0; }
-}
-
-@keyframes pulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -50%) scale(1.2); }
-}
-
-/* Responsive design */
-@media (max-width: 480px) {
-    .photo-booth {
-        padding: 20px;
-        margin: 10px;
+class PhotoBooth {
+    constructor() {
+        this.video = document.getElementById('video');
+        this.canvas = document.getElementById('canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.startBtn = document.getElementById('startBtn');
+        this.captureBtn = document.getElementById('captureBtn');
+        this.retakeBtn = document.getElementById('retakeBtn');
+        this.downloadBtn = document.getElementById('downloadBtn');
+        this.timerBtn = document.getElementById('timerBtn');
+        this.effectBtn = document.getElementById('effectBtn');
+        this.flipBtn = document.getElementById('flipBtn');
+        this.statusMessage = document.getElementById('statusMessage');
+        this.photoGallery = document.getElementById('photoGallery');
+        this.cameraContainer = document.getElementById('cameraContainer');
+        
+        this.stream = null;
+        this.capturedPhoto = null;
+        this.photos = [];
+        this.currentFilter = 'none';
+        this.timerEnabled = false;
+        this.effectsEnabled = false;
+        this.facingMode = 'user'; // 'user' for front camera, 'environment' for back camera
+        
+        this.init();
     }
     
-    .btn {
-        min-width: 100px;
-        font-size: 14px;
-        padding: 10px 20px;
+    init() {
+        this.setupEventListeners();
+        this.setupFilters();
     }
     
-    .controls {
-        gap: 10px;
+    setupEventListeners() {
+        this.startBtn.addEventListener('click', () => this.startCamera());
+        this.captureBtn.addEventListener('click', () => this.capturePhoto());
+        this.retakeBtn.addEventListener('click', () => this.retakePhoto());
+        this.downloadBtn.addEventListener('click', () => this.downloadPhoto());
+        this.timerBtn.addEventListener('click', () => this.toggleTimer());
+        this.effectBtn.addEventListener('click', () => this.toggleEffects());
+        this.flipBtn.addEventListener('click', () => this.flipCamera());
     }
-}
-/* เอฟเฟกต์ overlay สำหรับ softkorean */
-.softkorean-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 2;
-    background: rgba(255, 230, 240, 0.25); /* โทนชมพูอ่อน */
-    backdrop-filter: blur(1.5px); /* เบลอแบบนุ่มๆ */
-    mix-blend-mode: lighten; /* ทำให้สีซ้อนนุ่มขึ้น */
-    border-radius: 25px; /* ตาม container */
-}
+    
+    setupFilters() {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                this.currentFilter = btn.dataset.filter;
+                this.applyFilter();
+            });
+        });
+    }
+    
+    async startCamera() {
+        try {
+            this.stream = await navigator.mediaDevices.getUserMedia({ 
+                video: { 
+                    facingMode: this.facingMode,
+                    width: { ideal: 640 },
+                    height: { ideal: 480 }
+                } 
+            });
+            
+            this.video.srcObject = this.stream;
+            this.video.style.display = 'block';
+            
+            this.video.addEventListener('loadedmetadata', () => {
+                this.canvas.width = this.video.videoWidth;
+                this.canvas.height = this.video.videoHeight;
+                this.applyFilter();
+            });
+            
+            this.startBtn.disabled = true;
+            this.captureBtn.disabled = false;
+            this.flipBtn.disabled = false;
+            this.showStatus('เริ่มกล้องสำเร็จ! 📸', 'success');
+            
+        } catch (error) {
+            console.error('Error accessing camera:', error);
+            this.showStatus('ไม่สามารถเข้าถึงกล้องได้ กรุณาตรวจสอบการอนุญาต', 'error');
+        }
+    }
+    
+    async flipCamera() {
+        if (!this.stream) {
+            this.showStatus('กรุณาเปิดกล้องก่อน', 'error');
+            return;
+        }
+        
+        try {
+            // Stop current stream
+            this.stream.getTracks().forEach(track => track.stop());
+            
+            // Toggle facing mode
+            this.facingMode = this.facingMode === 'user' ? 'environment' : 'user';
+            
+            // Start new stream with new facing mode
+            this.stream = await navigator.mediaDevices.getUserMedia({ 
+                video: { 
+                    facingMode: this.facingMode,
+                    width: { ideal: 640 },
+                    height: { ideal: 480 }
+                } 
+            });
+            
+            this.video.srcObject = this.stream;
+            
+            this.video.addEventListener('loadedmetadata', () => {
+                this.canvas.width = this.video.videoWidth;
+                this.canvas.height = this.video.videoHeight;
+                this.applyFilter();
+            });
+            
+            const cameraType = this.facingMode === 'user' ? 'กล้องหน้า' : 'กล้องหลัง';
+            this.showStatus(`เปลี่ยนเป็น${cameraType}แล้ว 🔄`, 'success');
+            
+        } catch (error) {
+            console.error('Error flipping camera:', error);
+            this.showStatus('ไม่สามารถเปลี่ยนกล้องได้', 'error');
+            
+            // Revert to original facing mode
+            this.facingMode = this.facingMode === 'user' ? 'environment' : 'user';
+        }
+    }
+    
+    applyFilter() {
+        if (!this.video.srcObject) return;
+        
+        // Remove existing filter classes
+        this.video.className = '';
+        
+        // Remove softkorean overlay if exists
+        const existingOverlay = this.cameraContainer.querySelector('.softkorean-overlay');
+        if (existingOverlay) {
+            existingOverlay.remove();
+        }
+        
+        if (this.currentFilter === 'softkorean') {
+            this.video.classList.add('filter-softkorean');
+            // Add softkorean overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'softkorean-overlay';
+            this.cameraContainer.appendChild(overlay);
+        } else if (this.currentFilter !== 'none') {
+            this.video.classList.add(`filter-${this.currentFilter}`);
+        }
+    }
+    
+    async capturePhoto() {
+        if (!this.video.srcObject) return;
+        
+        if (this.timerEnabled) {
+            await this.startTimer();
+        }
+        
+        // Draw video frame to canvas with filter
+        this.ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
+        
+        // Apply filter to canvas if needed
+        if (this.currentFilter !== 'none') {
+            this.applyCanvasFilter();
+        }
+        
+        // Convert to blob and create image
+        this.canvas.toBlob((blob) => {
+            const url = URL.createObjectURL(blob);
+            this.capturedPhoto = {
+                url: url,
+                blob: blob,
+                timestamp: new Date().toLocaleString('th-TH')
+            };
+            
+            this.showCapturedPhoto();
+            this.addToGallery();
+            this.showStatus('ถ่ายรูปสำเร็จ! 🎉', 'success');
+        }, 'image/jpeg', 0.9);
+    }
+    
+    applyCanvasFilter() {
+        const imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+        const data = imageData.data;
+        
+        switch (this.currentFilter) {
+            case 'sepia':
+                for (let i = 0; i < data.length; i += 4) {
+                    const r = data[i];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    data[i] = Math.min(255, r * 0.393 + g * 0.769 + b * 0.189);
+                    data[i + 1] = Math.min(255, r * 0.349 + g * 0.686 + b * 0.168);
+                    data[i + 2] = Math.min(255, r * 0.272 + g * 0.534 + b * 0.131);
+                }
+                break;
+            case 'grayscale':
+                for (let i = 0; i < data.length; i += 4) {
+                    const gray = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+                    data[i] = gray;
+                    data[i + 1] = gray;
+                    data[i + 2] = gray;
+                }
+                break;
+            case 'brightness':
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i] = Math.min(255, data[i] * 1.5);
+                    data[i + 1] = Math.min(255, data[i + 1] * 1.5);
+                    data[i + 2] = Math.min(255, data[i + 2] * 1.5);
+                }
+                break;
+            case 'softkorean':
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i] = Math.min(255, data[i] * 1.1);
+                    data[i + 1] = Math.min(255, data[i + 1] * 1.05);
+                    data[i + 2] = Math.min(255, data[i + 2] * 1.1);
+                }
+                break;
+        }
+        
+        this.ctx.putImageData(imageData, 0, 0);
+    }
+    
+    async startTimer() {
+        return new Promise((resolve) => {
+            let count = 3;
+            const timerOverlay = document.createElement('div');
+            timerOverlay.className = 'timer-overlay';
+            timerOverlay.textContent = count;
+            this.cameraContainer.appendChild(timerOverlay);
+            
+            const interval = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    timerOverlay.textContent = count;
+                } else {
+                    timerOverlay.textContent = '📸';
+                    setTimeout(() => {
+                        timerOverlay.remove();
+                        resolve();
+                    }, 500);
+                    clearInterval(interval);
+                }
+            }, 1000);
+        });
+    }
+    
+    showCapturedPhoto() {
+        const img = document.createElement('img');
+        img.src = this.capturedPhoto.url;
+        img.className = 'captured-photo';
+        
+        this.video.style.display = 'none';
+        this.cameraContainer.appendChild(img);
+        
+        this.captureBtn.style.display = 'none';
+        this.retakeBtn.style.display = 'inline-block';
+        this.downloadBtn.style.display = 'inline-block';
+        this.flipBtn.disabled = true;
+    }
+    
+    retakePhoto() {
+        const capturedImg = this.cameraContainer.querySelector('.captured-photo');
+        if (capturedImg) {
+            capturedImg.remove();
+        }
+        
+        this.video.style.display = 'block';
+        this.captureBtn.style.display = 'inline-block';
+        this.retakeBtn.style.display = 'none';
+        this.downloadBtn.style.display = 'none';
+        this.flipBtn.disabled = false;
+        
+        if (this.capturedPhoto) {
+            URL.revokeObjectURL(this.capturedPhoto.url);
+            this.capturedPhoto = null;
+        }
+    }
+    
+    downloadPhoto() {
+        if (!this.capturedPhoto) return;
+        
+        const link = document.createElement('a');
+        link.href = this.capturedPhoto.url;
+        link.download = `photo-booth-${Date.now()}.jpg`;
+        link.click();
+        
+        this.showStatus('ดาวน์โหลดสำเร็จ! 💾', 'success');
+    }
+    
+    addToGallery() {
+        if (!this.capturedPhoto) return;
+        
+        this.photos.push(this.capturedPhoto);
+        
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+        
+        const img = document.createElement('img');
+        img.src = this.capturedPhoto.url;
+        img.alt = `Photo ${this.photos.length}`;
+        
+        galleryItem.appendChild(img);
+        galleryItem.addEventListener('click', () => {
+            window.open(this.capturedPhoto.url, '_blank');
+        });
