@@ -104,9 +104,10 @@ body {
     height: 100%;
     object-fit: cover;
     display: block;
+    transform: scaleX(-1);
 }
 
-#canvas {
+#canvas, #stripCanvas {
     display: none;
 }
 
@@ -115,6 +116,14 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 15px;
+    transform: none;
+}
+
+.strip-photo {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    transform: none;
 }
 
 .controls {
@@ -293,6 +302,11 @@ body {
     object-fit: cover;
 }
 
+.gallery-item.strip {
+    aspect-ratio: 1/4;
+    grid-row: span 4;
+}
+
 .status-message {
     margin-top: 15px;
     padding: 10px;
@@ -354,13 +368,6 @@ body {
     text-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
-.flip-btn {
-    background: linear-gradient(45deg, #ff69b4, #8a2be2);
-    color: white;
-    border: 2px solid rgba(255,255,255,0.4);
-    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-}
-
 .small-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
@@ -393,6 +400,20 @@ body {
     border-radius: 25px;
 }
 
+.strip-progress {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    z-index: 10;
+}
+
 /* Responsive design */
 @media (max-width: 480px) {
     .photo-booth {
@@ -408,5 +429,14 @@ body {
     
     .controls {
         gap: 10px;
+    }
+    
+    .filters {
+        gap: 8px;
+    }
+    
+    .filter-btn {
+        padding: 6px 12px;
+        font-size: 12px;
     }
 }
